@@ -1,21 +1,40 @@
 require 'rails_helper'
 
 RSpec.describe "Sessions", type: :request do
-  let!(:user) { FactoryBot.create(:user) }
+  let!(:user) { create(:user) }
+  let!(:team) { create(:team) }
 
   describe "POST /login" do
-    it "returns Login Successful" do
-      post '/login', 
-        params: { email: user.email, password: user.password }
-        expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body)['message']).to eq('Login Successful')
+    context 'User' do
+      it "returns Login Successful" do
+        post '/login', 
+          params: { email: user.email, password: user.password, client_type: 'user' }
+          expect(response).to have_http_status(:ok)
+          expect(JSON.parse(response.body)['message']).to eq('Login Successful')
+      end
+
+      it "returns Invalid Email or Password" do
+        post '/login', 
+          params: { email: user.email, password: "nottherightpassword", client_type: 'user' }
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON.parse(response.body)['message']).to eq('Invalid Email or Password')
+      end
     end
 
-    it "returns Invalid Email or Password" do
-      post '/login', 
-        params: { email: user.email, password: "nottherightpassword" }
-      expect(response).to have_http_status(:unprocessable_entity)
-      expect(JSON.parse(response.body)['message']).to eq('Invalid Email or Password')
+    context 'Team' do
+      it "returns Login Successful" do
+        post '/login', 
+          params: { email: team.email, password: team.password, client_type: 'team' }
+          expect(response).to have_http_status(:ok)
+          expect(JSON.parse(response.body)['message']).to eq('Login Successful')
+      end
+
+      it "returns Invalid Email or Password" do
+        post '/login', 
+          params: { email: team.email, password: "nottherightpassword", client_type: 'team' }
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(JSON.parse(response.body)['message']).to eq('Invalid Email or Password')
+      end
     end
   end
 

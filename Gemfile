@@ -17,7 +17,6 @@ gem 'puma', '~> 5.0'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'factory_bot', '~> 6.2.1'
-  gem 'faker', '~> 2.23.0'
   gem 'rspec-rails', '~> 5.1.2'
 end
 

@@ -1,3 +1,4 @@
+# user default
 users = ['Jane Smith', 'Joe Rolland']
 
 users.each do |name|
@@ -10,3 +11,6 @@ users.each do |name|
     password: 'Pass@1234'
   )
 end
+
+# team default
+Team.create(email: 'trading_co@example.com', name: 'Trading.Co', password: 'Pass@1234')

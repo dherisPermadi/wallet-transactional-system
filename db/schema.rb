@@ -10,9 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_24_041852) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_27_010523) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "identifier_stocks", force: :cascade do |t|
+    t.string "symbol_name"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_identifier_stocks_on_name"
+    t.index ["symbol_name"], name: "index_identifier_stocks_on_symbol_name"
+  end
+
+  create_table "indices_stocks", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_indices_stocks_on_name"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "email"
+    t.string "name"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_teams_on_email"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
@@ -21,6 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_24_041852) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
   end
 
 end
