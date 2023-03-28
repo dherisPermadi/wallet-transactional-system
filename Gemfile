@@ -10,7 +10,6 @@ gem 'dotenv-rails', '~> 2.8.1'
 gem 'kaminari', '~> 1.2.2'
 gem 'rack-cors'
 gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
-gem 'ransack', '~> 4.0.0', github: 'activerecord-hackery/ransack'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 
