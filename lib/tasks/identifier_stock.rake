@@ -2,13 +2,18 @@ namespace :identifier_stock do
   desc 'run create identifier stock'
 
   task generate: :environment do
-    stock_identifiers = LatestStockPrice.new(nil, nil).prices_all
+    indices = IndicesStock.all
 
-    stock_identifiers.each do |stock|
-      IdentifierStock.create_or_find_by(
-        symbol_name: stock['symbol'],
-        name: stock['identifier']
-      )
+    indices.each do |index_stock|
+      stock_identifiers = LatestStockPrice.new(index_stock.name, nil).prices
+
+      stock_identifiers.each do |stock|
+        IdentifierStock.create_or_find_by(
+          indices_stock_id: index_stock.id,
+          symbol_name: stock['symbol'],
+          name: stock['identifier']
+        )
+      end
     end
     puts 'Generate Identifier Stock Success'
   end

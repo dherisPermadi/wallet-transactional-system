@@ -1,7 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe IdentifierStock, type: :model do
-  subject { build(:identifier_stock) }
+  let(:indices_stock) { IndicesStock.create(name: 'NIFTY TEST') }
+  subject {
+    IdentifierStock.new(
+      indices_stock_id: indices_stock.id,
+      symbol_name: 'NIFTY TEST',
+      name: 'NIFTY TEST 100'
+    )
+  }
 
   context 'valid when all column is assigned' do
     it 'should be valid when all column is assigned' do
@@ -30,7 +37,11 @@ RSpec.describe IdentifierStock, type: :model do
     end
 
     it 'will be not valid when identifier was not unique' do
-      other_identifier_stock = build(:identifier_stock)
+      other_identifier_stock = IdentifierStock.new(
+        indices_stock_id: indices_stock.id,
+        symbol_name: 'NIFTY TEST',
+        name: 'NIFTY TEST 100'
+      )
       expect(other_identifier_stock).to_not be_valid
     end
   end
